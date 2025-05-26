@@ -19,5 +19,4 @@ export default defineConfig({
     },
     plugins: [vue()],
     base: process.env.NODE_ENV === "production" ? "/Diplom2025/" : "/",
-    publicDir: false
 });
