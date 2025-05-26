@@ -1,4 +1,3 @@
-import { getAuth } from "firebase/auth";
 import { createRouter, createWebHistory } from "vue-router";
 import { useAuthStore } from "@stores/auth";
 import { watch } from "vue";
@@ -102,12 +101,8 @@ const routes = [
 ];
 
 const router = createRouter({
-    history: createWebHistory(import.meta.env.BASE_URL),
+    history: createWebHistory("/Diplom2025/"),
     routes,
-    scrollBehavior(to, from, savedPosition) {
-        // Всегда прокручиваем наверх
-        return { top: 0 };
-    },
 });
 
 router.beforeEach(async (to, from, next) => {
