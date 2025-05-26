@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watchEffect, markRaw } from 'vue';
+import { ref, watchEffect, markRaw } from "vue";
 
 const props = defineProps({
     iconName: {
@@ -10,14 +10,14 @@ const props = defineProps({
         type: String,
         default: "20px",
         required: false,
-    }
+    },
 });
 
 const iconComponent = ref(null);
 
-watchEffect(async () => {   
+watchEffect(async () => {
     try {
-        const imported = await import(`./${props.iconName}.vue`);
+        const imported = await import(`./svg/${props.iconName}.vue`);
         iconComponent.value = markRaw(imported.default);
     } catch (error) {
         console.error(`Ошибка загрузки иконки: ${props.iconName}`);
