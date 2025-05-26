@@ -102,8 +102,12 @@ const routes = [
 ];
 
 const router = createRouter({
-    history: createWebHistory(),
+    history: createWebHistory(import.meta.env.BASE_URL),
     routes,
+    scrollBehavior(to, from, savedPosition) {
+        // Всегда прокручиваем наверх
+        return { top: 0 };
+    },
 });
 
 router.beforeEach(async (to, from, next) => {
