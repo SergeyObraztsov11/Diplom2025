@@ -1,4 +1,4 @@
-import{s as r}from"./index-BXMH6y3x.js";//! moment.js locale configuration
+import{s as r}from"./index-BF_z3IxX.js";//! moment.js locale configuration
 //! locale : Russian [ru]
 //! author : Viktorminator : https://github.com/Viktorminator
 //! author : Menelion Elensúle : https://github.com/Oire
