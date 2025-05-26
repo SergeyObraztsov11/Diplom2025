@@ -1,0 +1,31 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Your rule content
+
+-   You can @ files here
+-   You can use markdown but dont have to
+1. Code and Structuring
+    - Apply the component-based approach of Vue for clear code organization.
+    - Structure components based on logical grouping and reuse, dividing them into atoms, molecules, and organisms of design.
+2. Styling
+    - Follow a consistent style of Tailwind classes for better readability.
+    - Avoid inline styles; instead, use Tailwind classes along with custom components for specific styles.
+3. Interaction with Firebase
+    - Handle all database operations through separate services for better manageability.
+    - Use Firebase Authentication for user authentication and implement role-based access functionality.
+4. Performance Optimization
+    - Use lazy loading for components, images, and resources to speed up initial loading.
+    - Regularly analyze bundle sizes and optimize code and resources using tools like Webpack.
+
+5. Error Handling
+    - Implement centralized error handling and logging for monitoring and tracking.
+    - Create user-friendly error messages to improve user interaction and gain deeper insights into errors.
+6. Security
+    - Validate data on both the client and server sides before sending it to Firebase.
+    - Set strict Firebase security rules that restrict access based on roles and privileges.
+7. Interface Design
+    - Apply modern UX/UI design principles and conduct user interface testing.
+    - Adapt interfaces for various devices using responsive design with Tailwind.
