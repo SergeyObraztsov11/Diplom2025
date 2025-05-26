@@ -1,0 +1,1 @@
+import{_ as t}from"./_plugin-vue_export-helper-DlAUqK2U.js";import{o as e,h as r,l as s}from"./index-C9eFqA3M.js";const a={},c={class:"flex-1 bg-gradient-to-br from-[#1d1f20] via-[#262627] to-[#111113]"};function n(o,f){return e(),r("div",c,[s(o.$slots,"default")])}const d=t(a,[["render",n]]);export{d as A};
