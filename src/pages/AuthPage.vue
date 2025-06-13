@@ -61,14 +61,14 @@ const loginUser = async () => {
 
 <template>
     <AuthLayout>
-        <div
-            class="flex max-w-xl h-screen mx-auto items-center justify-center overflow-y-auto"
-        >
+        <div class="flex-1 flex items-center justify-center">
             <form
                 @submit.prevent="loginUser"
-                class="flex flex-col w-full bg-main-black rounded-lg p-6 gap-4"
+                class="flex flex-col max-w-xl bg-main-black rounded-lg p-6 gap-4"
             >
-                <h1 class="text-nowrap text-5xl font-semibold mb-4 text-center ">Вход</h1>
+                <h1 class="text-nowrap text-5xl font-semibold mb-4 text-center">
+                    Вход
+                </h1>
                 <div
                     class="flex flex-row h-12 w-full items-center gap-2 p-2 border-2 border-main-gray text-main-gray rounded-full transition-colors focus-within:border-main-white focus-within:bg-main-gray focus-within:text-main-white"
                 >

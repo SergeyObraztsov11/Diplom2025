@@ -36,7 +36,7 @@ export const useTracksStore = defineStore("tracks", () => {
     };
     // Список лайкнутых треков
     const likedTracks = computed(() => {
-        return authStore.currentUserData?.likedTracks;
+        return authStore.currentUserData?.likedTracks || [];
     });
 
     const getTrackDetails = async (trackDoc) => {

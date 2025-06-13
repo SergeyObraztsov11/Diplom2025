@@ -5,6 +5,7 @@ import CreateMessage from "@components/CreateMessage.vue";
 import { useChatsStore } from "@stores/chats";
 import { ref, computed, watch, nextTick, onMounted } from "vue";
 import { useAuthStore } from "@stores/auth";
+import MyImage from "@ui/MyImage.vue";
 
 const props = defineProps({
     chatId: {
@@ -32,21 +33,21 @@ const onSendMessage = (text) => {
     chatsStore.sendMessage(props.chatId, text);
 };
 
-
 // ref на контейнер с сообщениями
 const messagesContainer = ref(null);
 // Функция для прокрутки вниз
 const scrollToBottom = () => {
     nextTick(() => {
         if (messagesContainer.value) {
-            messagesContainer.value.scrollTop = messagesContainer.value.scrollHeight;
+            messagesContainer.value.scrollTop =
+                messagesContainer.value.scrollHeight;
         }
     });
 };
 // CПрокручиваем вниз при мантировании
 onMounted(() => {
-    scrollToBottom()
-})
+    scrollToBottom();
+});
 // Cледим за изменением сообщений для прокрутки вниз
 watch(
     () => currentChat.value?.messages?.length,
@@ -57,6 +58,21 @@ watch(
 </script>
 <template>
     <div class="flex flex-col w-full h-full gap-2">
+        <!-- <div class="flex flex-row p-2 w-full gap-2 items-center">
+            <button>
+                <BaseIcon iconName="CloseIcon" class="fill-main-white h-6 w-6" />
+            </button>
+            
+            <div
+                class="h-12 w-12 rounded-full overflow-hidden shrink-0 border border-main-black"
+            >
+                <MyImage :url="null" loadingIcon="user" />
+            </div>
+
+            <div class="text-lg truncate font-semibold hover:text-white">
+                Название пользователя
+            </div>
+        </div> -->
         <div
             ref="messagesContainer"
             class="flex flex-col w-full h-full overflow-y-auto gap-2"

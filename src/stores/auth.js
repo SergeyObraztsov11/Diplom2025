@@ -78,13 +78,11 @@ export const useAuthStore = defineStore("auth", () => {
 
     const registerUser = async ({ displayName, email, password }) => {
         try {
-            // Добавление пользователя в FireBase Auth
             const { user } = await createUserWithEmailAndPassword(
                 auth,
                 email,
                 password
             );
-            // Добавление пользователя в FireStore
             await setDoc(doc(db, "users", user.uid), {
                 displayName: displayName,
                 imageURL: null,

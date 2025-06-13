@@ -1,27 +1,24 @@
 <script setup>
-import { useWindowSize } from "@vueuse/core";
-import { computed, onMounted, ref } from "vue";
+import { onMounted, ref } from "vue";
 
 import Track from "@components/Track.vue";
 import TrackSkeleton from "@components/TrackSkeleton.vue";
-import AlbumCardSkeleton from "@ui/AlbumCardSkeleton.vue";
 import AlbumCard from "@ui/AlbumCard.vue";
-import SectionHeader from "@ui/SectionHeader.vue";
-import CardsGrid from "@ui/CardsGrid.vue";
+import AlbumCardSkeleton from "@ui/AlbumCardSkeleton.vue";
 
-import { A11y, Navigation } from "swiper/modules";
+import AppFooter from "@components/AppFooter.vue";
 import "swiper/swiper-bundle.css";
 import { Swiper, SwiperSlide } from "swiper/vue";
+import { A11y, Mousewheel } from "swiper/modules";
 
+import UserLayout from "@layouts/UserLayout.vue";
 import { useAlbumsStore } from "@stores/albums";
 import { useAuthStore } from "@stores/auth";
 import { useTracksStore } from "@stores/tracks";
-import UserLayout from "@layouts/UserLayout.vue";
 
 const tracksStore = useTracksStore();
 const albumsStore = useAlbumsStore();
-const authStore = useAuthStore();
-const modules = [Navigation, A11y];
+const modules = [A11y, Mousewheel];
 
 const isLoading = ref(true);
 const popularTracks = ref([]);
@@ -33,14 +30,16 @@ const likedAlbums = ref([]);
 onMounted(async () => {
     try {
         isLoading.value = true;
-        const [tracks, albums, likedTracksData, likedAlbumsData] = await Promise.all([
-            tracksStore.getAllTracks(),
-            albumsStore.getAllAlbums(),
-            tracksStore.getLikedTracks(),
-            albumsStore.getLikedAlbums()
-        ]);
-        popularTracks.value = tracks;
-        popularAlbums.value = albums;
+        const [tracks, albums, likedTracksData, likedAlbumsData] =
+            await Promise.all([
+                tracksStore.getAllTracks() || [],
+                albumsStore.getAllAlbums() || [],
+                tracksStore.getLikedTracks() || [],
+                albumsStore.getLikedAlbums() || [],
+            ]);
+
+        popularTracks.value = tracks.slice(0, 10);
+        popularAlbums.value = albums.slice(0, 10);
         featuredAlbums.value = albums.slice(0, 2);
         likedTracks.value = likedTracksData;
         likedAlbums.value = likedAlbumsData;
@@ -79,7 +78,9 @@ onMounted(async () => {
                         <div
                             class="absolute z-10 inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent p-8 flex flex-col justify-end"
                         >
-                            <h3 class="text-3xl font-bold text-white mb-3 tracking-tight">
+                            <h3
+                                class="text-3xl font-bold text-white mb-3 tracking-tight"
+                            >
                                 {{ album.title }}
                             </h3>
                             <p class="text-white/90 text-lg">
@@ -92,10 +93,15 @@ onMounted(async () => {
 
             <!-- Любимые треки -->
             <section v-if="likedTracks.length > 0" class="flex flex-col gap-6">
-                <h1 class="text-4xl font-bold tracking-tight">
-                    Любимые треки
-                </h1>
-                <div class="flex flex-col gap-3 bg-main-gray/30 rounded-2xl p-4">
+                <RouterLink :to="{ name: 'liked_tracks' }"
+                    ><h1 class="text-4xl font-bold tracking-tight">
+                        Любимые треки
+                    </h1></RouterLink
+                >
+
+                <div
+                    class="flex flex-col gap-3 bg-main-gray/30 rounded-2xl p-4"
+                >
                     <Track
                         v-for="track in likedTracks"
                         :key="track.id"
@@ -108,14 +114,16 @@ onMounted(async () => {
 
             <!-- Любимые альбомы -->
             <section v-if="likedAlbums.length > 0" class="flex flex-col gap-6">
-                <h1 class="text-4xl font-bold tracking-tight">
-                    Любимые альбомы
-                </h1>
+                <RouterLink :to="{ name: 'liked_albums' }">
+                    <h1 class="text-4xl font-bold tracking-tight">
+                        Любимые альбомы
+                    </h1>
+                </RouterLink>
                 <Swiper
                     :space-between="40"
                     :modules="modules"
-                    navigation
                     slides-per-view="auto"
+                    :mousewheel="true"
                     class="w-full"
                 >
                     <SwiperSlide
@@ -133,7 +141,9 @@ onMounted(async () => {
                 <h1 class="text-4xl font-bold tracking-tight">
                     Популярные треки
                 </h1>
-                <div class="flex flex-col gap-3 bg-main-gray/30 rounded-2xl p-4">
+                <div
+                    class="flex flex-col gap-3 bg-main-gray/30 rounded-2xl p-4"
+                >
                     <template v-if="isLoading">
                         <TrackSkeleton v-for="i in 5" :key="i" />
                     </template>
@@ -155,7 +165,9 @@ onMounted(async () => {
                     Популярные альбомы
                 </h1>
                 <template v-if="isLoading">
-                    <div class="flex p-2 flex-row w-full overflow-x-hidden gap-6">
+                    <div
+                        class="flex p-2 flex-row w-full overflow-x-hidden gap-6"
+                    >
                         <AlbumCardSkeleton v-for="i in 3" :key="i" />
                     </div>
                 </template>
@@ -163,7 +175,7 @@ onMounted(async () => {
                     <Swiper
                         :space-between="40"
                         :modules="modules"
-                        navigation
+                        :mousewheel="true"
                         slides-per-view="auto"
                         class="w-full"
                     >
@@ -182,6 +194,7 @@ onMounted(async () => {
                     </p>
                 </template>
             </section>
+            <AppFooter />
         </div>
     </UserLayout>
 </template>

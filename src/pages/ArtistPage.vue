@@ -399,56 +399,53 @@ const disabledAlbums = computed(() => {
                     </template>
                 </div>
                 <div>
-                    <h2 class="text-xl font-bold mb-3">Ссылки</h2>
-
-                    <div class="flex flex-col gap-3 w-full">
-                        <!-- Скелетон элементов ссылки -->
-                        <template v-if="isLoading">
+                    <!-- Скелетон элементов ссылки -->
+                    <template v-if="isLoading">
+                        <div
+                            v-for="i in 4"
+                            class="flex flex-col w-full gap-1 justify-between"
+                        >
                             <div
-                                v-for="i in 4"
-                                class="flex flex-col w-full gap-1 justify-between"
-                            >
-                                <div
-                                    class="h-5 w-1/2 bg-main-gray rounded animate-pulse"
-                                ></div>
+                                class="h-5 w-1/2 bg-main-gray rounded animate-pulse"
+                            ></div>
 
-                                <div
-                                    class="h-5 w-full bg-main-gray rounded animate-pulse"
-                                ></div>
-                            </div>
-                        </template>
-                        <template v-else>
                             <div
-                                v-for="socialLink in artistData.socialLinks"
-                                class="flex flex-col w-full gap-1 justify-between"
+                                class="h-5 w-full bg-main-gray rounded animate-pulse"
+                            ></div>
+                        </div>
+                    </template>
+                    <template v-else-if="artistData?.socialLinks?.length > 0">
+                        <h2 class="text-xl font-bold mb-3">Ссылки</h2>
+                        <div
+                            v-for="socialLink in artistData.socialLinks"
+                            class="flex flex-col w-full gap-1 justify-between"
+                        >
+                            <a
+                                :href="socialLink.url"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                :title="socialLink.name"
+                                class="hover:text-white transition h-5 flex flex-row w-fit items-center gap-1"
                             >
-                                <a
-                                    :href="socialLink.url"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    :title="socialLink.name"
-                                    class="hover:text-white transition h-5 flex flex-row w-fit items-center gap-1"
-                                >
-                                    <span class="text-base truncate">
-                                        {{ socialLink.name }}
-                                    </span>
-                                    <BaseIcon
-                                        iconName="ArrowOutIcon"
-                                        class="fill-current w-5 h-5"
-                                    />
-                                </a>
-                                <a
-                                    :href="socialLink.url"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    :title="socialLink.name"
-                                    class="h-5 w-full text-main-white/50 truncate hover:text-main-white hover:underline transition"
-                                >
-                                    {{ socialLink.url }}
-                                </a>
-                            </div>
-                        </template>
-                    </div>
+                                <span class="text-base truncate">
+                                    {{ socialLink.name }}
+                                </span>
+                                <BaseIcon
+                                    iconName="ArrowOutIcon"
+                                    class="fill-current w-5 h-5"
+                                />
+                            </a>
+                            <a
+                                :href="socialLink.url"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                :title="socialLink.name"
+                                class="h-5 w-full text-main-white/50 truncate hover:text-main-white hover:underline transition"
+                            >
+                                {{ socialLink.url }}
+                            </a>
+                        </div>
+                    </template>
                 </div>
             </section>
         </div>

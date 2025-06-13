@@ -1,8 +1,9 @@
-<script setup></script>
+<script setup>
+import AppFooter from "@components/AppFooter.vue";
+</script>
 <template>
-    <div
-        class="flex-1 bg-gradient-to-br from-[#1d1f20] via-[#262627] to-[#111113]"
-    >
+    <div class="min-h-screen flex flex-col bg-main-gray p-8 gap-12">
         <slot></slot>
+        <AppFooter />
     </div>
 </template>

@@ -18,5 +18,5 @@ export default defineConfig({
         },
     },
     plugins: [vue()],
-    base: '/Diplom2025/'
+    base: '/',
 });

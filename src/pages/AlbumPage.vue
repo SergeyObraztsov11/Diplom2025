@@ -212,7 +212,6 @@ const getFormatedListenersCount = (count) => {
                             icon="playlist"
                         />
                     </div>
-
                     <!-- Информация -->
                     <div class="flex flex-col justify-around w-full">
                         <p class="text-sm font-medium text-white/80">Альбом</p>

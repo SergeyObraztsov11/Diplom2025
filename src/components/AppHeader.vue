@@ -118,6 +118,7 @@ onUnmounted(() => {
             class="absolute right-0 top-0 h-full w-1 cursor-col-resize bg-main-gray hover:bg-main-white/20 transition-all"
             @mousedown="startResize"
         ></div>
+        
         <!-- Навигация -->
         <nav class="flex flex-col w-full items-center">
             <RouterLink
@@ -176,7 +177,7 @@ onUnmounted(() => {
                         iconName="AddIcon"
                         text="Создать альбом"
                     />
-                    <DropDownMenuItem
+                    <!-- <DropDownMenuItem
                         @click="onClickSwitchTheme"
                         :iconName="
                             themeStore.currentTheme === 'dark'
@@ -188,7 +189,7 @@ onUnmounted(() => {
                                 ? 'Светлая'
                                 : 'Темная'
                         "
-                    />
+                    /> -->
                     <DropDownMenuItem
                         @click="onClickLogout"
                         :isRed="true"

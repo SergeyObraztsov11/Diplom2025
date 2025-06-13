@@ -1,0 +1,1 @@
+import{_ as r}from"./_plugin-vue_export-helper-DlAUqK2U.js";import{o as s,h as t,l as o}from"./index-C5SE_L3X.js";const a={},c={class:"grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] justify-items-center gap-4"};function n(e,i){return s(),t("div",c,[o(e.$slots,"default")])}const f=r(a,[["render",n]]);export{f as C};

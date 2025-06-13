@@ -67,12 +67,10 @@ const registerUser = async () => {
 
 <template>
     <AuthLayout>
-        <div
-            class="flex max-w-xl h-screen mx-auto items-center justify-center overflow-y-auto"
-        >
+        <div class="flex-1 flex items-center justify-center">
             <form
                 @submit.prevent="registerUser"
-                class="flex flex-col w-full bg-main-black rounded-lg p-6 gap-4"
+                class="flex flex-col max-w-xl bg-main-black rounded-lg p-6 gap-4"
             >
                 <h1 class="text-nowrap text-5xl font-semibold mb-4 text-center">
                     Регистрация

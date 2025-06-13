@@ -186,7 +186,7 @@ export const useAlbumsStore = defineStore("albums", () => {
     };
 
     const likedAlbums = computed(() => {
-        return authStore.currentUserData?.likedAlbums;
+        return authStore.currentUserData?.likedAlbums || [];
     });
     const getLikedAlbums = async () => {
         const likedAlbumsIds = likedAlbums.value;

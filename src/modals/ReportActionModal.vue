@@ -8,6 +8,18 @@ import ModalsLayout from "@modals/ModalsLayout.vue";
 import CommentTarget from "@components/ReportTargets/CommentTarget.vue";
 import UserTarget from "@components/ReportTargets/UserTarget.vue";
 import AlbumTarget from "@components/ReportTargets/AlbumTarget.vue";
+import {
+    getFirestore,
+    doc,
+    updateDoc,
+    serverTimestamp,
+    collection,
+    query,
+    where,
+    getDocs,
+    deleteDoc,
+} from "firebase/firestore";
+
 const modalsStore = useModalsStore();
 const authStore = useAuthStore();
 const reportsStore = useReportsStore();
@@ -75,17 +87,127 @@ const validateForm = () => {
     return errors.value.length === 0;
 };
 
-// Обработка жалобы
+const banUser = async (userId) => {
+    const db = getFirestore();
+
+    try {
+        // 1. Получаем все альбомы пользователя по полю author
+        const albumsQuery = query(
+            collection(db, "albums"),
+            where("author", "==", doc(db, "users", userId))
+        );
+        const albumsSnapshot = await getDocs(albumsQuery);
+
+        // 2. Получаем все треки пользователя по полю author
+        const tracksQuery = query(
+            collection(db, "tracks"),
+            where("author", "==", doc(db, "users", userId))
+        );
+        const tracksSnapshot = await getDocs(tracksQuery);
+
+        // 3. Получаем все комментарии пользователя по полю user
+        const commentsQuery = query(
+            collection(db, "comments"),
+            where("user", "==", doc(db, "users", userId))
+        );
+        const commentsSnapshot = await getDocs(commentsQuery);
+
+        // 4. Удаляем все альбомы
+        const albumPromises = albumsSnapshot.docs.map((doc) =>
+            deleteDoc(doc.ref)
+        );
+
+        // 5. Удаляем все треки
+        const trackPromises = tracksSnapshot.docs.map((doc) =>
+            deleteDoc(doc.ref)
+        );
+
+        // 6. Удаляем все комментарии
+        const commentPromises = commentsSnapshot.docs.map((doc) =>
+            deleteDoc(doc.ref)
+        );
+
+        // 7. Удаляем самого пользователя
+        const userPromise = deleteDoc(doc(db, "users", userId));
+
+        // 8. Выполняем все операции параллельно
+        await Promise.all([
+            ...albumPromises,
+            ...trackPromises,
+            ...commentPromises,
+            userPromise,
+        ]);
+    } catch (error) {
+        console.error("Error banning user:", error);
+        throw error;
+    }
+};
+
+const handleTargetAction = async (targetType, targetId, action) => {
+    const db = getFirestore();
+
+    switch (targetType) {
+        case "comment":
+            if (action === "delete") {
+                await updateDoc(doc(db, "comments", targetId), {
+                    isDeleted: true,
+                    deletedAt: serverTimestamp(),
+                    deletedBy: authStore.currentUserId,
+                });
+            } else if (action === "ban") {
+                await updateDoc(doc(db, "comments", targetId), {
+                    isBanned: true,
+                    bannedAt: serverTimestamp(),
+                    bannedBy: authStore.currentUserId,
+                });
+            }
+            break;
+
+        case "album":
+            if (action === "delete") {
+                await updateDoc(doc(db, "albums", targetId), {
+                    isDeleted: true,
+                    deletedAt: serverTimestamp(),
+                    deletedBy: authStore.currentUserId,
+                });
+            } else if (action === "ban") {
+                await updateDoc(doc(db, "albums", targetId), {
+                    isBanned: true,
+                    bannedAt: serverTimestamp(),
+                    bannedBy: authStore.currentUserId,
+                });
+            }
+            break;
+
+        case "user":
+            if (action === "ban") {
+                await banUser(targetId);
+            }
+            break;
+    }
+};
+
 const submitAction = async () => {
     if (!validateForm()) return;
 
     try {
         isLoading.value = true;
+        const reportData = report.value;
+
+        // Обрабатываем действие с целью жалобы
+        await handleTargetAction(
+            reportData.targetType,
+            reportData.targetId,
+            form.value.action
+        );
+
+        // Обновляем статус жалобы
         await reportsStore.updateReportStatus(report.value.id, {
             status: form.value.status,
             action: form.value.action,
             notes: form.value.notes,
             adminId: authStore.currentUserId,
+            processedAt: serverTimestamp(),
         });
 
         modalsStore.closeModal();

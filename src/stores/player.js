@@ -37,7 +37,7 @@ export const usePlayerStore = defineStore("player", () => {
 
     const isLiked = computed(() => {
         if (!currentTrackData.value) return false;
-        return authStore.currentUserData.likedTracks.includes(
+        return authStore.currentUserData?.likedTracks?.includes(
             currentTrackData.value.id
         );
     });

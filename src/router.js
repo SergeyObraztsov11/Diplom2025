@@ -101,7 +101,7 @@ const routes = [
 ];
 
 const router = createRouter({
-    history: createWebHistory("/Diplom2025/"),
+    history: createWebHistory("/"),
     routes,
 });
 

@@ -1,0 +1,1 @@
+import{_ as a}from"./AppFooter-D7ZgsriB.js";import{o,h as s,l as t,f as r}from"./index-C5SE_L3X.js";const c={class:"min-h-screen flex flex-col bg-main-gray p-8 gap-12"},p={__name:"AuthLayout",setup(n){return(e,_)=>(o(),s("div",c,[t(e.$slots,"default"),r(a)]))}};export{p as _};

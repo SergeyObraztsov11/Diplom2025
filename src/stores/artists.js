@@ -105,7 +105,6 @@ export const useArtistsStore = defineStore("artists", () => {
         const artists = await Promise.all(
             querySnapshot.docs.map(getArtistDetails)
         );
-        console.log(artists);
         return artists;
     };
 

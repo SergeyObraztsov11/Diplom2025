@@ -7,14 +7,6 @@ import { initializeApp } from "firebase/app";
 import { getStorage } from "firebase/storage";
 import { useThemeStore } from "@stores/theme";
 
-// VITE_FIREBASE_API_KEY=AIzaSyDho8uikVOpwNiQqRB1Hz8q2VALDo-M5wc
-// VITE_FIREBASE_AUTH_DOMAIN=my-vue-project-b3bc2.firebaseapp.com
-// VITE_FIREBASE_DATABASE_URL=https://my-vue-project-b3bc2-default-rtdb.europe-west1.firebasedatabase.app
-// VITE_FIREBASE_PROJECT_ID=my-vue-project-b3bc2
-// VITE_FIREBASE_STORAGE_BUCKET=my-vue-project-b3bc2.appspot.com
-// VITE_FIREBASE_MESSAGING_SENDER_ID=1078851671214
-// VITE_FIREBASE_APP_ID=1:1078851671214:web:103f519a53fc2c6791093f
-
 const firebaseConfig = {
     apiKey: "AIzaSyDho8uikVOpwNiQqRB1Hz8q2VALDo-M5wc",
     authDomain: "my-vue-project-b3bc2.firebaseapp.com",
